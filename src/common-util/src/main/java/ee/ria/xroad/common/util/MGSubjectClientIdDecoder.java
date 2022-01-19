@@ -40,14 +40,15 @@ import java.util.regex.Pattern;
 import static ee.ria.xroad.common.util.CertUtils.getRDNValue;
 
 /**
- * Helper class for decoding ClientId from Finnish X-Road instance signing certificates.
+ * Helper class for decoding ClientId from Finnish X-Road instance signing
+ * certificates.
  */
 public final class MGSubjectClientIdDecoder {
 
     public static final int NUM_COMPONENTS = 3;
 
     private MGSubjectClientIdDecoder() {
-        //utility class
+        // utility class
     }
 
     /**
@@ -70,10 +71,10 @@ public final class MGSubjectClientIdDecoder {
     /*
      * The encoding for clientID:
      * <ul>
-     *  <li>C = FI (country code must be 'FI' when using this decoder)</li>
-     *  <li>O = organization (must be present)
-     *  <li>CN = memberCode (business code without "Y" prefix)</li>
-     *  <li>serialNumber = instanceIdentifier;serverCode;memberClass
+     * <li>C = MG (country code must be 'MG' when using this decoder)</li>
+     * <li>O = organization (must be present)
+     * <li>CN = memberCode (business code without "Y" prefix)</li>
+     * <li>serialNumber = instanceIdentifier;serverCode;memberClass
      * </ul>
      */
 
@@ -81,7 +82,7 @@ public final class MGSubjectClientIdDecoder {
 
     private static ClientId parseClientId(X500Name x500name) {
         String c = getRDNValue(x500name, BCStyle.C);
-        if (!"FI".equals(c)) {
+        if (!"MG".equals(c)) {
             throw new CodedException(ErrorCodes.X_INCORRECT_CERTIFICATE,
                     "Certificate subject name does not contain valid country code");
         }
@@ -117,19 +118,18 @@ public final class MGSubjectClientIdDecoder {
 
     }
 
-
     /*
      * The legacy encoding for clientID:
      * <ul>
-     *  <li>C = FI (country code must be 'FI' when using this decoder)</li>
-     *  <li>O = instanceId</li>
-     *  <li>OU = memberClass</li>
-     *  <li>CN = memberCode (business code without "Y" prefix)</li>
+     * <li>C = MG (country code must be 'MG' when using this decoder)</li>
+     * <li>O = instanceId</li>
+     * <li>OU = memberClass</li>
+     * <li>CN = memberCode (business code without "Y" prefix)</li>
      * </ul>
      */
     private static ClientId parseClientIdFromLegacyName(X500Name x500name) {
         String c = getRDNValue(x500name, BCStyle.C);
-        if (!"FI".equals(c)) {
+        if (!"MG".equals(c)) {
             throw new CodedException(ErrorCodes.X_INCORRECT_CERTIFICATE,
                     "Certificate subject name does not contain valid country code");
         }

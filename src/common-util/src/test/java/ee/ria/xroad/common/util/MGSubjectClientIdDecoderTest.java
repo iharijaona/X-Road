@@ -50,7 +50,7 @@ import java.util.Date;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Unit tests for {@link FISubjectClientIdDecoder}
+ * Unit tests for {@link MGSubjectClientIdDecoder}
  */
 public class MGSubjectClientIdDecoderTest {
 
@@ -79,13 +79,13 @@ public class MGSubjectClientIdDecoderTest {
     public void shouldDecodeClientId() throws GeneralSecurityException, IOException, OperatorCreationException {
         X509Certificate cert = generateSelfSignedCertificate(
                 "C=MG, O=ACME, CN=1234567-8, serialNumber=MG-TEST/serverCode/PUB", keyPair);
-        ClientId clientId = FISubjectClientIdDecoder.getSubjectClientId(cert);
+        ClientId clientId = MGSubjectClientIdDecoder.getSubjectClientId(cert);
 
         assertEquals(ClientId.create("MG-TEST", "PUB", "1234567-8"), clientId);
 
         cert = generateSelfSignedCertificate("C=MG, O=ACME, CN=1234567-8, serialNumber=FI-TEST/serverCode/PUB",
                 keyPair);
-        clientId = FISubjectClientIdDecoder.getSubjectClientId(cert);
+        clientId = MGSubjectClientIdDecoder.getSubjectClientId(cert);
 
         assertEquals(ClientId.create("MG-TEST", "PUB", "1234567-8"), clientId);
     }
@@ -101,7 +101,7 @@ public class MGSubjectClientIdDecoderTest {
     public void shouldFailIfEmptyComponents() throws GeneralSecurityException, IOException, OperatorCreationException {
         final X509Certificate cert = generateSelfSignedCertificate("C=MG, O=ACME, CN=1234567-8, serialNumber=///",
                 keyPair);
-        FISubjectClientIdDecoder.getSubjectClientId(cert);
+        MGSubjectClientIdDecoder.getSubjectClientId(cert);
     }
 
     /**
@@ -116,7 +116,7 @@ public class MGSubjectClientIdDecoderTest {
             OperatorCreationException {
         final X509Certificate cert = generateSelfSignedCertificate("C=MG, O=ACME, CN=1234567-8, serialNumber=1/2/3/4",
                 keyPair);
-        FISubjectClientIdDecoder.getSubjectClientId(cert);
+        MGSubjectClientIdDecoder.getSubjectClientId(cert);
     }
 
     /**
@@ -131,7 +131,7 @@ public class MGSubjectClientIdDecoderTest {
             OperatorCreationException {
         final X509Certificate cert = generateSelfSignedCertificate(
                 "C=XX, O=ACME, CN=1234567-8, serialNumber=MG-TEST/serverCode/PUB", keyPair);
-        FISubjectClientIdDecoder.getSubjectClientId(cert);
+        MGSubjectClientIdDecoder.getSubjectClientId(cert);
     }
 
     /**
@@ -145,7 +145,7 @@ public class MGSubjectClientIdDecoderTest {
     public void shouldFailIfOrgMissing() throws GeneralSecurityException, IOException, OperatorCreationException {
         final X509Certificate cert = generateSelfSignedCertificate(
                 "C=MG, CN=1234567-8, serialNumber=MG-TEST/serverCode/PUB", keyPair);
-        FISubjectClientIdDecoder.getSubjectClientId(cert);
+        MGSubjectClientIdDecoder.getSubjectClientId(cert);
     }
 
     /*
@@ -164,7 +164,7 @@ public class MGSubjectClientIdDecoderTest {
     @Test
     public void shouldDecodeClientIdLegacy() throws GeneralSecurityException, IOException, OperatorCreationException {
         final X509Certificate cert = generateSelfSignedCertificate("C=MG, O=MG-TEST, OU=PUB, CN=1234567-8", keyPair);
-        ClientId clientId = FISubjectClientIdDecoder.getSubjectClientId(cert);
+        ClientId clientId = MGSubjectClientIdDecoder.getSubjectClientId(cert);
 
         assertEquals(ClientId.create("MG-TEST", "PUB", "1234567-8"), clientId);
     }
@@ -180,7 +180,7 @@ public class MGSubjectClientIdDecoderTest {
     public void shouldFailIfCountryDoesNotMatchLegacy() throws GeneralSecurityException, IOException,
             OperatorCreationException {
         final X509Certificate cert = generateSelfSignedCertificate("C=XX, O=MG-TEST, OU=PUB, CN=1234567-8", keyPair);
-        FISubjectClientIdDecoder.getSubjectClientId(cert);
+        MGSubjectClientIdDecoder.getSubjectClientId(cert);
     }
 
     private X509Certificate generateSelfSignedCertificate(String dn, KeyPair pair) throws OperatorCreationException,
@@ -200,7 +200,7 @@ public class MGSubjectClientIdDecoderTest {
      */
 
     /**
-     * Test that FI-DEV stone age decoding succeeds
+     * Test that MG-DEV stone age decoding succeeds
      * 
      * @throws GeneralSecurityException  when security exception occurs
      * @throws IOException               when I/O error occurs
@@ -209,7 +209,7 @@ public class MGSubjectClientIdDecoderTest {
     @Test
     public void shouldDecodeClientIdStoneAge() throws GeneralSecurityException, IOException, OperatorCreationException {
         final X509Certificate cert = generateSelfSignedCertificate("C=MG-DEV, O=GOV, CN=0245437-2", keyPair);
-        ClientId clientId = FISubjectClientIdDecoder.getSubjectClientId(cert);
+        ClientId clientId = MGSubjectClientIdDecoder.getSubjectClientId(cert);
 
         assertEquals(ClientId.create("MG-DEV", "GOV", "0245437-2"), clientId);
     }

@@ -44,7 +44,7 @@ public class MGCertificateProfileInfoProvider
     @Override
     public SignCertificateProfileInfo getSignCertProfile(
             SignCertificateProfileInfo.Parameters params) {
-        return new FiVRKSignCertificateProfileInfo(params);
+        return new MGSignCertificateProfileInfo(params);
     }
 
 }

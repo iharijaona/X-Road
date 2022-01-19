@@ -239,7 +239,7 @@ public class MGCertificateProfileInfoProviderTest {
         // ------------------------------------------------------------------------
 
         private CertificateProfileInfoProvider provider() {
-                return new FiVRKCertificateProfileInfoProvider();
+                return new MGCertificateProfileInfoProvider();
         }
 
         private MGSignCertificateProfileInfo getSignProfile() {

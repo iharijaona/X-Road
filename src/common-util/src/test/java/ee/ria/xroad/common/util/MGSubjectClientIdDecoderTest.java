@@ -83,7 +83,7 @@ public class MGSubjectClientIdDecoderTest {
 
         assertEquals(ClientId.create("MG-TEST", "PUB", "1234567-8"), clientId);
 
-        cert = generateSelfSignedCertificate("C=MG, O=ACME, CN=1234567-8, serialNumber=FI-TEST/serverCode/PUB",
+        cert = generateSelfSignedCertificate("C=MG, O=ACME, CN=1234567-8, serialNumber=MG-TEST/serverCode/PUB",
                 keyPair);
         clientId = MGSubjectClientIdDecoder.getSubjectClientId(cert);
 
